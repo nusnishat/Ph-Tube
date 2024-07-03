@@ -4,11 +4,29 @@ const loadData = id =>{
     .then(data=> displayVidoes(data.data))
 }
 const displayVidoes = vidoes =>{
+    vidoes.sort((a, b)=> a.others.view - b.others.view)
+
     const vidoesContainer = document.getElementById('vidoes-container');
     vidoesContainer.textContent = '';
+    const novideoContainer = document.getElementById('no-video');
+    novideoContainer.textContent = '';
+    
+    if(vidoes.length==0)
+        {
+            const div = document.createElement('div');
+            div.classList.add('my-12');
+            div.innerHTML = `
+            <img class="mx-auto text-center"
+            src="/images/Icon.png"
+            />
+            <h1 class="text-xl flex justify-center font-semibold">Oops!! Sorry, There is no content here</h1>
+            `  
+            novideoContainer.appendChild(div);
+        }
     vidoes.forEach(video=>{
         const div = document.createElement('div');
         div.classList.add('card', 'bg-base-100', 'shadow-lg');
+
         div.innerHTML = `
         <figure class="h-56">
             <img class="h-56"
